@@ -21,13 +21,13 @@ init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
 
 install:
-  - cmd: "mdkir dist"
+  - cmd: "mkdir dist"
   - cmd: cd "SeaBreeze"
   - ps: 'cat os-support\\windows\\VisualStudio2012\\VSProj\\SeaBreeze.rc | % { $_ -replace "afxres.h","windows.h" } > SeaBreeze.rc.new'
   - ps: 'cat SeaBreeze.rc.new | select-string -pattern "afxres.rc" -notmatch > SeaBreeze.rc.new2'
   - cmd: "MOVE /Y SeaBreeze.rc.new2 os-support\\windows\\VisualStudio2012\\VSProj\\SeaBreeze.rc"
   - cmd: msbuild.exe /p:Configuration=Debug /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2012\\SeaBreeze.sln"
-  - cmd: "XCOPY SeaBreeze\\os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\*.msi ..\\dist /Y"
+  - cmd: "XCOPY SeaBreeze\\os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi ..\\dist\\SeaBreezeSetup-%PYTHON_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi /Y"
 
 build: off
 
