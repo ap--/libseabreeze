@@ -1,24 +1,14 @@
 environment:
 
-  global:
-    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-    # /E:ON and /V:ON options are not enabled in the batch script intepreter
-    # See: http://stackoverflow.com/a/13751649/163740
-    WITH_COMPILER: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_compiler.cmd"
-
   matrix:
-    - PYTHON: "C:\\Python27"
-      PYTHON_VERSION: "2.7.8"
-      PYTHON_ARCH: "32"
-      SEABREEZE_ARCH: "x86"
+    - SEABREEZE_ARCH: "x86"
+      SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
 
-    - PYTHON: "C:\\Python27-x64"
-      PYTHON_VERSION: "2.7.8"
-      PYTHON_ARCH: "64"
-      SEABREEZE_ARCH: "x64"
+    - SEABREEZE_ARCH: "x64"
+      SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\x64\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
 
 init:
-  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "ECHO START"
 
 install:
   - cmd: "mkdir dist"
@@ -27,7 +17,7 @@ install:
   - ps: 'cat SeaBreeze.rc.new | select-string -pattern "afxres.rc" -notmatch > SeaBreeze.rc.new2'
   - cmd: "MOVE /Y SeaBreeze.rc.new2 os-support\\windows\\VisualStudio2012\\VSProj\\SeaBreeze.rc"
   - cmd: msbuild.exe /p:Configuration=Debug /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2012\\SeaBreeze.sln"
-  - cmd: "COPY /Y os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi ..\\dist\\SeaBreezeSetup-%PYTHON_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi"
+  - cmd: "COPY /Y %SEABREEZE_MSI% ..\\dist\\SeaBreezeSetup-%SEABREEZE_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi"
 
 build: off
 
