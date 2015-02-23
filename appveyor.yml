@@ -31,9 +31,11 @@ install:
 
 build: off
 
-test_script: off
+test_script:
+  - "ECHO done"
 
-after_test: off
+after_test:
+  - "ECHO done"
 
 artifacts:
   - path: dist\*.msi
