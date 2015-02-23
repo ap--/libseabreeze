@@ -27,7 +27,7 @@ install:
   - ps: 'cat SeaBreeze.rc.new | select-string -pattern "afxres.rc" -notmatch > SeaBreeze.rc.new2'
   - cmd: "MOVE /Y SeaBreeze.rc.new2 os-support\\windows\\VisualStudio2012\\VSProj\\SeaBreeze.rc"
   - cmd: msbuild.exe /p:Configuration=Debug /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2012\\SeaBreeze.sln"
-  - cmd: "XCOPY SeaBreeze\\os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi ..\\dist\\SeaBreezeSetup-%PYTHON_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi /Y"
+  - cmd: "XCOPY os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi ..\\dist\\SeaBreezeSetup-%PYTHON_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi /Y"
 
 build: off
 
