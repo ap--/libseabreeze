@@ -1,0 +1,17 @@
+language:
+- objective-c
+install:
+    - cd SeaBreeze
+    - make lib/libseabreeze.dylib
+    - cp lib/libseabreeze.dylib ../
+script:
+    - echo "done"
+#deploy:
+#  provider: releases
+#  api_key:
+#    secure: 
+#  file: $whl_file
+#  skip_cleanup: true
+#  on:
+#    all_branches: true
+#    tags: true
