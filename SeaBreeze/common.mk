@@ -23,12 +23,17 @@ ifeq ($(UNAME), Darwin)
     SUFFIX      = dylib
     LFLAGS_APP += -L/usr/lib \
                   -lstdc++
-    LFLAGS_LIB += -dynamic \
+    LFLAGS_LIB += -arch i386 \
+		  -arch x86_64 \
+		  -dynamic \
                   -dynamiclib \
                   -framework Carbon \
                   -framework CoreFoundation \
-                  -framework IOKit
+                  -framework IOKit \
+		  -install_name /usr/local/lib/libseabreeze.dylib
     CFLAGS_BASE = -I${SEABREEZE}/include \
+		  -arch i386 \
+		  -arch x86_64 \
                   -c \
                   -Wall \
                   -Wunused \
