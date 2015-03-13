@@ -4,7 +4,9 @@ install:
     - mkdir lib
     - cd SeaBreeze
     - make lib/libseabreeze.dylib
-    - cp lib/libseabreeze.dylib ../
+    - cp lib/libseabreeze.dylib ../lib/
+    - cd ..
+    - cp OSX_INSTALL.txt lib/
     - hdiutil create -format UDZO -srcfolder lib libseabreeze-$TRAVIS_BRANCH.dmg 
 script:
     - echo "done"
