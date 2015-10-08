@@ -35,7 +35,6 @@ ifeq ($(UNAME), Darwin)
                   -Wall \
                   -Wunused \
                   -Wmissing-include-dirs \
-                  -Werror \
                   -g \
                   -O0 \
                   -fpic \
