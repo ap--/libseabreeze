@@ -1,0 +1,43 @@
+environment:
+
+  matrix:
+    - SEABREEZE_ARCH: "x86"
+      SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
+
+    - SEABREEZE_ARCH: "x64"
+      SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\x64\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
+
+init:
+  - "ECHO START"
+
+install:
+  - cmd: "mkdir dist"
+  - cmd: cd "SeaBreeze"
+  - ps: 'cat os-support\\windows\\VisualStudio2012\\VSProj\\SeaBreeze.rc | % { $_ -replace "afxres.h","windows.h" } > SeaBreeze.rc.new'
+  - ps: 'cat SeaBreeze.rc.new | select-string -pattern "afxres.rc" -notmatch > SeaBreeze.rc.new2'
+  - cmd: "MOVE /Y SeaBreeze.rc.new2 os-support\\windows\\VisualStudio2012\\VSProj\\SeaBreeze.rc"
+  - cmd: msbuild.exe /p:Configuration=Debug /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2012\\SeaBreeze.sln"
+  - cmd: "COPY /Y %SEABREEZE_MSI% ..\\dist\\SeaBreezeSetup-%SEABREEZE_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi"
+
+build: off
+
+test_script:
+  - "ECHO done"
+
+after_test:
+  - "ECHO done"
+
+artifacts:
+  - path: dist\*.msi
+    name: msi-installer
+
+deploy:
+  release: $(appveyor_repo_tag_name)
+  provider: GitHub
+  auth_token:
+    secure: 2jmPAIr0bDr/Aak6PsCtd5nRPQpHEKwjKN13k4fDp4f6fbibuLmGEkQspQguQwFe
+  artifact: msi-installer
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
