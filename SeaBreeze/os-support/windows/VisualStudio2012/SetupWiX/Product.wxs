@@ -32,31 +32,31 @@
       <?define ProductName = "SeaBreeze (64-bit)" ?>
       <?define Win64 = "yes" ?>
       <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
-      <?define LibOutputDir = $(var.SolutionDir)\x64\Debug ?>
+      <?define LibOutputDir = $(var.SolutionDir)\x64\Release ?>
     <?else ?>
       <?define ProductName = "SeaBreeze (32-bit)" ?>
       <?define Win64 = "no" ?>
       <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
-      <?define LibOutputDir = $(var.SolutionDir)\Debug ?>
+      <?define LibOutputDir = $(var.SolutionDir)\Release ?>
     <?endif ?>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' />
 
-		<Feature Id="ProductFeature" Title="SeaBreeze" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
+    <Feature Id="ProductFeature" Title="SeaBreeze" Level="1">
+	<ComponentGroupRef Id="ProductComponents" />
+    </Feature>
 
-	</Product>
+  </Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="WindowsFolder" Name="Windows">
         <Directory Id="SYSTEM32_FOLDER" Name="System32" />
       </Directory>
-			<Directory Id="$(var.PlatformProgramFilesFolder)">
-				<Directory Id="MANUFACTURER_FOLDER" Name="Ocean Optics">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="MANUFACTURER_FOLDER" Name="Ocean Optics">
           <Directory Id="PRODUCT_FOLDER" Name="SeaBreeze">
             <Directory Id="LIB_FOLDER" Name="Library" />
             <Directory Id="API_FOLDER" Name="API">
@@ -67,16 +67,16 @@
               </Directory>
             </Directory>
             <Directory Id="DRIVER_FOLDER" Name="Drivers">
-                <Directory Id="COINSTALLERS_I386_FOLDER" Name="i386" />
-                <Directory Id="COINSTALLERS_AMD64_FOLDER" Name="amd64" />
+              <Directory Id="COINSTALLERS_I386_FOLDER" Name="i386" />
+              <Directory Id="COINSTALLERS_AMD64_FOLDER" Name="amd64" />
             </Directory>
           </Directory>
         </Directory>
       </Directory>
-		</Directory>
-	</Fragment>
+    </Directory>
+  </Fragment>
 
-	<Fragment>
+  <Fragment>
     <ComponentGroup Id="ProductComponents">
 
       <!-- ============================================================= -->
@@ -87,9 +87,7 @@
       <Component Id="LibraryComponent" Directory="LIB_FOLDER" Win64="$(var.Win64)">
         <File Id='Lib_SeaBreezeDLL' Name='SeaBreeze.dll' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.dll' KeyPath='yes'/>
         <File Id='Lib_SeaBreezeEXP' Name='SeaBreeze.exp' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.exp' />
-        <File Id='Lib_SeaBreezeILK' Name='SeaBreeze.ilk' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.ilk' />
         <File Id='Lib_SeaBreezeLIB' Name='SeaBreeze.lib' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.lib' />
-        <File Id='Lib_SeaBreezePDB' Name='SeaBreeze.pdb' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.pdb' />
       </Component>
 
       <Component Id="System32Component" Directory="SYSTEM32_FOLDER" Win64="$(var.Win64)">
@@ -208,6 +206,6 @@
         <File DiskId="1" Id="OOI_Ventana_XP.inf"     Name="OOI_Ventana_XP.inf"     Source="$(var.DriverDir)\OOI_Ventana_XP.inf"      />
       </Component>
     </ComponentGroup>
-	</Fragment>
+  </Fragment>
 
 </Wix>
