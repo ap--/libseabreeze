@@ -32,12 +32,12 @@
       <?define ProductName = "SeaBreeze (64-bit)" ?>
       <?define Win64 = "yes" ?>
       <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
-      <?define LibOutputDir = $(var.SolutionDir)\x64\Debug ?>
+      <?define LibOutputDir = $(var.SolutionDir)\x64\Release ?>
     <?else ?>
       <?define ProductName = "SeaBreeze (32-bit)" ?>
       <?define Win64 = "no" ?>
       <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
-      <?define LibOutputDir = $(var.SolutionDir)\Debug ?>
+      <?define LibOutputDir = $(var.SolutionDir)\Release ?>
     <?endif ?>
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
