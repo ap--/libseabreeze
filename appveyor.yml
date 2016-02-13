@@ -1,10 +1,12 @@
 environment:
 
   matrix:
-    - SEABREEZE_ARCH: "x86"
+    - SEABREEZE_ARCH: "Win32"
+      SEABREEZE_N: "32"
       SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
 
     - SEABREEZE_ARCH: "x64"
+      SEABREEZE_N: "64"
       SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\x64\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
 
 init:
@@ -13,7 +15,7 @@ init:
 install:
   - cmd: "mkdir dist"
   - cmd: cd "SeaBreeze"
-  - cmd: msbuild.exe /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2013\\SeaBreeze.sln"
+  - cmd: "msbuild.exe /t:SeaBreezeSetUp%SEABREEZE_N% /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% os-support\\windows\\VisualStudio2013\\SeaBreeze.sln"
   - cmd: "COPY /Y %SEABREEZE_MSI% ..\\dist\\SeaBreezeSetup-%SEABREEZE_ARCH%bit-%APPVEYOR_REPO_BRANCH%.msi"
 
 build: off
