@@ -40,23 +40,23 @@
       <?define LibOutputDir = $(var.SolutionDir)\Release ?>
     <?endif ?>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' />
 
-		<Feature Id="ProductFeature" Title="SeaBreeze" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
+    <Feature Id="ProductFeature" Title="SeaBreeze" Level="1">
+	<ComponentGroupRef Id="ProductComponents" />
+    </Feature>
 
-	</Product>
+  </Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="WindowsFolder" Name="Windows">
         <Directory Id="SYSTEM32_FOLDER" Name="System32" />
       </Directory>
       <Directory Id="$(var.PlatformProgramFilesFolder)">
-	<Directory Id="MANUFACTURER_FOLDER" Name="Ocean Optics">
+        <Directory Id="MANUFACTURER_FOLDER" Name="Ocean Optics">
           <Directory Id="PRODUCT_FOLDER" Name="SeaBreeze">
             <Directory Id="LIB_FOLDER" Name="Library" />
             <Directory Id="API_FOLDER" Name="API">
@@ -67,16 +67,16 @@
               </Directory>
             </Directory>
             <Directory Id="DRIVER_FOLDER" Name="Drivers">
-                <Directory Id="COINSTALLERS_I386_FOLDER" Name="i386" />
-                <Directory Id="COINSTALLERS_AMD64_FOLDER" Name="amd64" />
+              <Directory Id="COINSTALLERS_I386_FOLDER" Name="i386" />
+              <Directory Id="COINSTALLERS_AMD64_FOLDER" Name="amd64" />
             </Directory>
           </Directory>
         </Directory>
       </Directory>
-		</Directory>
-	</Fragment>
+    </Directory>
+  </Fragment>
 
-	<Fragment>
+  <Fragment>
     <ComponentGroup Id="ProductComponents">
 
       <!-- ============================================================= -->
@@ -206,6 +206,6 @@
         <File DiskId="1" Id="OOI_Ventana_XP.inf"     Name="OOI_Ventana_XP.inf"     Source="$(var.DriverDir)\OOI_Ventana_XP.inf"      />
       </Component>
     </ComponentGroup>
-	</Fragment>
+  </Fragment>
 
 </Wix>
