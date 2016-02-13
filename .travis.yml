@@ -7,14 +7,14 @@ install:
     - cp lib/libseabreeze.dylib ../lib/
     - cd ..
     - cp OSX_INSTALL.txt lib/
-    - hdiutil create -format UDZO -srcfolder lib libseabreeze-$TRAVIS_BRANCH.dmg 
+    - hdiutil create -format UDZO -srcfolder lib $TRAVIS_BRANCH.dmg 
 script:
     - echo "done"
 deploy:
   provider: releases
   api_key:
     secure: "mhVjl+ZV3z45q7bxIabHGHTufFankWT7kCk9YZfsxPG/LUG7aGUYwFtCoW9DpYHak0G4cDFafaUVX1rhPLItXj8MgKsBwnC1BYOum4rHF7uUUQy0rbCM6idybTc/D1s0eWpjb0E0iqPQP9KSwFQTnXN3yEDHJQNKib3XyzeV/u8="
-  file: libseabreeze-$TRAVIS_BRANCH.dmg
+  file: $TRAVIS_BRANCH.dmg
   skip_cleanup: true
   on:
     all_branches: true
