@@ -24,13 +24,18 @@ ifeq ($(UNAME), Darwin)
     SUFFIX      = dylib
     LFLAGS_APP += -L/usr/lib \
                   -lstdc++
-    LFLAGS_LIB += -dynamic \
+    LFLAGS_LIB += -arch i386 \
+		  -arch x86_64 \
+		  -dynamic \
                   -dynamiclib \
+		  -install_name /usr/local/lib/libseabreeze.dylib \
                   -framework Carbon \
                   -framework CoreFoundation \
-                  -framework IOKit 
+                  -framework IOKit
                                     
     CFLAGS_BASE = -I${SEABREEZE}/include \
+		  -arch i386 \
+		  -arch x86_64 \
                   -c \
                   -Wall \
                   -Wunused \
@@ -39,7 +44,7 @@ ifeq ($(UNAME), Darwin)
                   -g \
                   -O0 \
                   -fpic \
-                  -fno-stack-protector 
+                  -fno-stack-protector
 
 # Cygwin-32 configuration 
 else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
