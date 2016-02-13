@@ -87,7 +87,6 @@
       <Component Id="LibraryComponent" Directory="LIB_FOLDER" Win64="$(var.Win64)">
         <File Id='Lib_SeaBreezeDLL' Name='SeaBreeze.dll' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.dll' KeyPath='yes'/>
         <File Id='Lib_SeaBreezeEXP' Name='SeaBreeze.exp' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.exp' />
-        <File Id='Lib_SeaBreezeILK' Name='SeaBreeze.ilk' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.ilk' />
         <File Id='Lib_SeaBreezeLIB' Name='SeaBreeze.lib' DiskId='1' Source='$(var.LibOutputDir)\SeaBreeze.lib' />
       </Component>
 
