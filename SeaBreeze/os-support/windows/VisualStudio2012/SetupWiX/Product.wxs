@@ -3,6 +3,8 @@
 
   <!-- New to WiX?  Recommend reading http://stackoverflow.com/questions/471424/wix-tricks-and-tips/577793#577793 -->
 
+  <UIRef Id="WixUI_Minimal" />
+
   <Product 
     Id="F6857325-8FAB-49A1-987A-E045706DE551" 
     Name="SeaBreeze" 
