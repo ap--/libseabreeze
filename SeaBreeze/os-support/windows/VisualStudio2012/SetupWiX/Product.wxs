@@ -55,8 +55,8 @@
       <Directory Id="WindowsFolder" Name="Windows">
         <Directory Id="SYSTEM32_FOLDER" Name="System32" />
       </Directory>
-			<Directory Id="$(var.PlatformProgramFilesFolder)">
-				<Directory Id="MANUFACTURER_FOLDER" Name="Ocean Optics">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+	<Directory Id="MANUFACTURER_FOLDER" Name="Ocean Optics">
           <Directory Id="PRODUCT_FOLDER" Name="SeaBreeze">
             <Directory Id="LIB_FOLDER" Name="Library" />
             <Directory Id="API_FOLDER" Name="API">
