@@ -1,4 +1,9 @@
 # Test build
+dependencies:
+  pre:
+    - sudo apt-get update
+    - sudo apt-get install libusb-dev
+
 compile:
   override:
     - make lib/libseabreeze.so:
