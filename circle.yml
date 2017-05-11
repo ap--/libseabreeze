@@ -1,0 +1,11 @@
+# Test build
+compile:
+  override:
+    - make lib/libseabreeze.so:
+        pwd:
+          SeaBreeze
+
+# Define artifacts
+general:
+  artifacts:
+    - "SeaBreeze/lib/libseabreeze.so"
