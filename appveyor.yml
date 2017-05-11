@@ -1,0 +1,39 @@
+environment:
+
+  matrix:
+    - SEABREEZE_ARCH: "x86"
+      SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
+
+    - SEABREEZE_ARCH: "x64"
+      SEABREEZE_MSI: "os-support\\windows\\VisualStudio2012\\SetupWiX\\bin\\x64\\Debug\\SeaBreezeSetup-XXbit-vXYZ.msi"
+
+init:
+  - "ECHO START"
+
+install:
+  - cmd: "mkdir dist"
+  - cmd: cd "SeaBreeze"
+  - cmd: msbuild.exe /t:SeaBreeze /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2015\\SeaBreeze.sln" 
+
+build: off
+
+test_script:
+  - "ECHO done"
+
+after_test:
+  - "ECHO done"
+
+artifacts:
+  - path: dist\*.msi
+    name: msi-installer
+
+deploy:
+  release: $(appveyor_repo_tag_name)
+  provider: GitHub
+  auth_token:
+    secure: 2jmPAIr0bDr/Aak6PsCtd5nRPQpHEKwjKN13k4fDp4f6fbibuLmGEkQspQguQwFe
+  artifact: msi-installer
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
