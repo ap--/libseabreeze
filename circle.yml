@@ -10,6 +10,10 @@ compile:
         pwd:
           SeaBreeze
 
+test:
+  override:
+    - "true"
+
 # Define artifacts
 general:
   artifacts:
