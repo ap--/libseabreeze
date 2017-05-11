@@ -1,3 +1,9 @@
+
+[![Travis](https://img.shields.io/travis/ap--/libseabreeze.svg?label=osx)](https://travis-ci.org/ap--/libseabreeze)
+[![AppVeyor](https://img.shields.io/appveyor/ci/ap--/libseabreeze.svg?label=windows)](https://ci.appveyor.com/project/ap--/libseabreeze)
+[![CircleCI](https://img.shields.io/circleci/project/github/ap--/libseabreeze.svg?label=linux)](https://circleci.com/gh/ap--/libseabreeze)
+
+
 # libseabreeze
 
 Github clone of [SeaBreeze](https://sourceforge.net/p/seabreeze) for building seabreeze shared library used as backend in [python-seabreeze](https://github.com/ap--/python-seabreeze).

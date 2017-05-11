@@ -20,15 +20,20 @@ after_test:
   - "ECHO done"
 
 artifacts:
-  - path: SeaBreeze\lib\*
+  - path: SeaBreeze\lib
     name: seabreeze-lib
+    type: zip
+
+  - path: SeaBreeze\os-support\windows\FilesToInstall\windows-support
+    name: seabreeze-drivers
+    type: zip
 
 deploy:
   release: $(appveyor_repo_tag_name)
   provider: GitHub
   auth_token:
     secure: 2jmPAIr0bDr/Aak6PsCtd5nRPQpHEKwjKN13k4fDp4f6fbibuLmGEkQspQguQwFe
-  artifact: seabreeze-lib
+  artifact: seabreeze-lib,seabreeze-drivers
   draft: false
   prerelease: false
   on:
