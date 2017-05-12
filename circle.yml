@@ -18,3 +18,10 @@ test:
 general:
   artifacts:
     - "SeaBreeze/lib/libseabreeze.so"
+
+deployment:
+  release:
+    tag: /libseabreeze-.*/
+    owner: ap--
+    commands:
+      - ./deploy_master.sh
