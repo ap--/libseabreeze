@@ -28,4 +28,4 @@ deployment:
     owner: ap--
     commands:
         - go get github.com/aktau/github-release
-        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --file "SeaBreeze/${CIRCLE_TAG}.tar.gz"
+        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --name "${CIRCLE_TAG}.tar.gz" --file "SeaBreeze/${CIRCLE_TAG}.tar.gz"
