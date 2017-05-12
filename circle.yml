@@ -9,6 +9,9 @@ compile:
     - make lib/libseabreeze.so:
         pwd:
           SeaBreeze
+    - tar czf ${CIRCLE_TAG}.tar.gz lib/libseabreeze.so:
+        pwd:
+          SeaBreeze
 
 test:
   override:
@@ -17,11 +20,12 @@ test:
 # Define artifacts
 general:
   artifacts:
-    - "SeaBreeze/lib/libseabreeze.so"
+    - "SeaBreeze/${CIRCLE_TAG}.tar.gz"
 
 deployment:
   release:
     tag: /libseabreeze-.*/
     owner: ap--
     commands:
-      - ./deploy_master.sh
+        - go get github.com/aktau/github-release
+        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --file "SeaBreeze/${CIRCLE_TAG}.tar.gz"
