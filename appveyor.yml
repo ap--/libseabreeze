@@ -10,9 +10,6 @@ init:
 install:
   - cmd: cd "SeaBreeze"
   - cmd: msbuild.exe /t:SeaBreeze /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2015\\SeaBreeze.sln" 
-  {
-  }
-
 
 build: off
 
