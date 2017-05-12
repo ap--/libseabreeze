@@ -10,6 +10,12 @@ init:
 install:
   - cmd: cd "SeaBreeze"
   - cmd: msbuild.exe /t:SeaBreeze /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2015\\SeaBreeze.sln" 
+  - ps: |
+  if($env:SEABREEZE_ARCH -eq 'x64')
+  {
+    7z a seabreeze-drivers.zip os-support\windows\windows-support
+  }
+
 
 build: off
 
@@ -21,19 +27,18 @@ after_test:
 
 artifacts:
   - path: SeaBreeze\lib
-    name: seabreeze-lib
+    name: seabreeze-lib-$(SEABREEZE_ARCH)
     type: zip
 
-  - path: SeaBreeze\os-support\windows\FilesToInstall\windows-support
+  - path: SeaBreeze\seebreeze-drivers.zip
     name: seabreeze-drivers
-    type: zip
 
 deploy:
   release: $(appveyor_repo_tag_name)
   provider: GitHub
   auth_token:
     secure: 2jmPAIr0bDr/Aak6PsCtd5nRPQpHEKwjKN13k4fDp4f6fbibuLmGEkQspQguQwFe
-  artifact: seabreeze-lib,seabreeze-drivers
+  artifact: seabreeze-lib-$(SEEBREEZE_ARCH),seabreeze-drivers
   draft: false
   prerelease: false
   on:
