@@ -21,19 +21,19 @@ after_test:
 
 artifacts:
   - path: SeaBreeze\lib
-    name: seabreeze-lib-$(SEABREEZE_ARCH)
+    name: $(appveyor_repo_tag_name)-$(SEABREEZE_ARCH)
     type: zip
 
-  - path: SeaBreeze\os-support\windows\windows-support
-    name: seabreeze-drivers-$(SEABREEZE_ARCH)
+  - path: SeaBreeze\os-support\windows\FilesToInstall\windows-support
+    name: $(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH)
     type: zip
 
 deploy:
   release: $(appveyor_repo_tag_name)
   provider: GitHub
   auth_token:
-    secure: 2jmPAIr0bDr/Aak6PsCtd5nRPQpHEKwjKN13k4fDp4f6fbibuLmGEkQspQguQwFe
-  artifact: seabreeze-lib-$(SEEBREEZE_ARCH),seabreeze-drivers-$(SEABREEZE_ARCH)
+    secure: cUL3LbCCVYDc8dpqZgCsbbSdFyDRr6qDQRCAOBUmQJtifkXutnNvinvMP5/G8t1e
+  artifact: $(appveyor_repo_tag_name)-$(SEEBREEZE_ARCH),$(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH)
   draft: false
   prerelease: false
   on:
