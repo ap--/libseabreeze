@@ -6,10 +6,19 @@ dependencies:
 
 compile:
   override:
-    - make lib/libseabreeze.so:
+    - make logger=0 lib/libseabreeze.so:
         pwd:
           SeaBreeze
-    - tar czf ${CIRCLE_TAG}.tar.gz lib/libseabreeze.so:
+    - tar czf ${CIRCLE_TAG}-64.tar.gz lib/libseabreeze.so:
+        pwd:
+          SeaBreeze
+    - make clean:
+        pwd:
+          SeaBreeze
+    - make wordwidth=32 logger=0 lib/libseabreeze.so:
+        pwd:
+          SeaBreeze
+    - tar czf ${CIRCLE_TAG}-32.tar.gz lib/libseabreeze.so:
         pwd:
           SeaBreeze
 
@@ -20,7 +29,8 @@ test:
 # Define artifacts
 general:
   artifacts:
-    - "SeaBreeze/${CIRCLE_TAG}.tar.gz"
+    - "SeaBreeze/${CIRCLE_TAG}-32.tar.gz"
+    - "SeaBreeze/${CIRCLE_TAG}-64.tar.gz"
 
 deployment:
   release:
@@ -28,4 +38,5 @@ deployment:
     owner: ap--
     commands:
         - go get github.com/aktau/github-release
-        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --name "${CIRCLE_TAG}.tar.gz" --file "SeaBreeze/${CIRCLE_TAG}.tar.gz"
+        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --name "${CIRCLE_TAG}-32.tar.gz" --file "SeaBreeze/${CIRCLE_TAG}-32.tar.gz"
+        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --name "${CIRCLE_TAG}-64.tar.gz" --file "SeaBreeze/${CIRCLE_TAG}-64.tar.gz"
