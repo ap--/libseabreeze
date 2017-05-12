@@ -33,7 +33,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: cUL3LbCCVYDc8dpqZgCsbbSdFyDRr6qDQRCAOBUmQJtifkXutnNvinvMP5/G8t1e
-  artifact: $(appveyor_repo_tag_name)-$(SEEBREEZE_ARCH),$(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH)
+  artifact: SeaBreeze\os-support\windows\FilesToInstall\$(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH).zip,SeaBreeze\$(appveyor_repo_tag_name)-$(SEABREEZE_ARCH).zip 
   draft: false
   prerelease: false
   on:
