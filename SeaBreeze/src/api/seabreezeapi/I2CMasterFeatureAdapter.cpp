@@ -82,7 +82,7 @@ unsigned short  I2CMasterFeatureAdapter::i2cMasterReadBus(int *errorCode, unsign
         i2cReadData = this->feature->i2cMasterReadBus(*this->protocol, *this->bus, busIndex,slaveAddress, numberOfBytes);
 		readDataLength = (unsigned short)i2cReadData.size();
 
-        memcpy(i2cReadData.data(), readData, readDataLength);
+        memcpy(&i2cReadData[0], readData, readDataLength);
 
         SET_ERROR_CODE(ERROR_SUCCESS);
     } 
