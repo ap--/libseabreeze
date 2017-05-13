@@ -1,0 +1,94 @@
+From 44985f41c2deae803eae6ed6e38e3d7496e83741 Mon Sep 17 00:00:00 2001
+From: ap-- <andreas@poehlmann.io>
+Date: Sat, 13 May 2017 17:48:30 +0200
+Subject: [PATCH 2/4] vc9: vector.data() not supported
+
+---
+ SeaBreeze/src/api/seabreezeapi/I2CMasterFeatureAdapter.cpp        | 2 +-
+ .../src/api/seabreezeapi/WifiConfigurationFeatureAdapter.cpp      | 2 +-
+ .../obp/exchanges/OBPGetConsecutiveSampleCountExchange.cpp        | 2 +-
+ .../OceanOptics/protocols/obp/impls/OBPIntrospectionProtocol.cpp  | 8 ++++----
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/SeaBreeze/src/api/seabreezeapi/I2CMasterFeatureAdapter.cpp b/SeaBreeze/src/api/seabreezeapi/I2CMasterFeatureAdapter.cpp
+index 8bdadb5..0094760 100755
+--- a/SeaBreeze/src/api/seabreezeapi/I2CMasterFeatureAdapter.cpp
++++ b/SeaBreeze/src/api/seabreezeapi/I2CMasterFeatureAdapter.cpp
+@@ -82,7 +82,7 @@ unsigned short  I2CMasterFeatureAdapter::i2cMasterReadBus(int *errorCode, unsign
+         i2cReadData = this->feature->i2cMasterReadBus(*this->protocol, *this->bus, busIndex,slaveAddress, numberOfBytes);
+ 		readDataLength = (unsigned short)i2cReadData.size();
+ 
+-        memcpy(i2cReadData.data(), readData, readDataLength);
++        memcpy(&i2cReadData[0], readData, readDataLength);
+ 
+         SET_ERROR_CODE(ERROR_SUCCESS);
+     } 
+diff --git a/SeaBreeze/src/api/seabreezeapi/WifiConfigurationFeatureAdapter.cpp b/SeaBreeze/src/api/seabreezeapi/WifiConfigurationFeatureAdapter.cpp
+index f61a69b..cd55c71 100755
+--- a/SeaBreeze/src/api/seabreezeapi/WifiConfigurationFeatureAdapter.cpp
++++ b/SeaBreeze/src/api/seabreezeapi/WifiConfigurationFeatureAdapter.cpp
+@@ -131,7 +131,7 @@ unsigned char WifiConfigurationFeatureAdapter::getSSID(int *errorCode, unsigned
+         }
+         ssidVector.resize(index);
+         
+-        memcpy(ssid, ssidVector.data(), ssidVector.size());
++        memcpy(ssid, &ssidVector[0], ssidVector.size());
+ 
+         SET_ERROR_CODE(ERROR_SUCCESS);
+ 		return ssidVector.size() & 0xFF;
+diff --git a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPGetConsecutiveSampleCountExchange.cpp b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPGetConsecutiveSampleCountExchange.cpp
+index 298506c..f7b4411 100755
+--- a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPGetConsecutiveSampleCountExchange.cpp
++++ b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPGetConsecutiveSampleCountExchange.cpp
+@@ -59,7 +59,7 @@ unsigned int OBPGetConsecutiveSampleCountExchange::queryConsecutiveSampleCount(
+     }
+ 
+ 	// cast of a byte pointer(data) to an unsigned integer pointer which is dereferenced
+-	consecutiveSampleCount = *(unsigned int *)((*result).data()); 
++	consecutiveSampleCount = *(unsigned int *)(&(*result)[0]); 
+ 
+     delete result;
+ 
+diff --git a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPIntrospectionProtocol.cpp b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPIntrospectionProtocol.cpp
+index 2596c06..961fc58 100755
+--- a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPIntrospectionProtocol.cpp
++++ b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPIntrospectionProtocol.cpp
+@@ -70,7 +70,7 @@ throw (ProtocolException)
+ 	{
+ 		// FIXME: The ocean binary protocol document states that the return value is an unsigned short,
+ 		//  however the command returns an unsigned int. 
+-		pixelCount = *reinterpret_cast<unsigned short *>(countResult->data());
++		pixelCount = *reinterpret_cast<unsigned short *>(&(*countResult)[0]);
+ 		delete countResult;
+ 	}
+ 
+@@ -104,7 +104,7 @@ std::vector<unsigned int> *OBPIntrospectionProtocol::getActivePixelRanges(const
+ 		// data is little endian
+ 		for (unsigned int i = 0; i < queryData->size(); i=i+sizeof(unsigned int)) 
+ 		{
+-			retval->push_back(*reinterpret_cast<unsigned int *>((queryData->data() + i)));
++			retval->push_back(*reinterpret_cast<unsigned int *>((&(*queryData)[0] + i)));
+ 		}
+ 	}
+ 	delete queryData;
+@@ -138,7 +138,7 @@ std::vector<unsigned int> *OBPIntrospectionProtocol::getElectricDarkPixelRanges(
+ 		// data is little endian
+ 		for (unsigned int i = 0; i < queryData->size(); i = i + sizeof(unsigned int))
+ 		{
+-			retval->push_back(*reinterpret_cast<unsigned int *>((queryData->data() + i)));
++			retval->push_back(*reinterpret_cast<unsigned int *>((&(*queryData)[0] + i)));
+ 		}
+ 	}
+ 	delete queryData;
+@@ -172,7 +172,7 @@ std::vector<unsigned int> *OBPIntrospectionProtocol::getOpticalDarkPixelRanges(c
+ 		// data is little endian
+ 		for (unsigned int i = 0; i < queryData->size(); i = i + sizeof(unsigned int))
+ 		{
+-			retval->push_back(*reinterpret_cast<unsigned int *>((queryData->data() + i)));
++			retval->push_back(*reinterpret_cast<unsigned int *>((&(*queryData)[0] + i)));
+ 		}
+ 	}
+ 	delete queryData;
+-- 
+2.11.0 (Apple Git-81)
+
