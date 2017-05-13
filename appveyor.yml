@@ -1,0 +1,40 @@
+environment:
+
+  matrix:
+    - SEABREEZE_ARCH: "Win32"
+    - SEABREEZE_ARCH: "x64"
+
+init:
+  - "ECHO START"
+
+install:
+  - cmd: cd "SeaBreeze"
+  - cmd: msbuild.exe /t:SeaBreeze /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2015\\SeaBreeze.sln" 
+
+build: off
+
+test_script:
+  - "ECHO done"
+
+after_test:
+  - "ECHO done"
+
+artifacts:
+  - path: SeaBreeze\lib
+    name: $(appveyor_repo_tag_name)-$(SEABREEZE_ARCH)
+    type: zip
+
+  - path: SeaBreeze\os-support\windows\FilesToInstall\windows-support
+    name: $(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH)
+    type: zip
+
+deploy:
+  release: $(appveyor_repo_tag_name)
+  provider: GitHub
+  auth_token:
+    secure: cUL3LbCCVYDc8dpqZgCsbbSdFyDRr6qDQRCAOBUmQJtifkXutnNvinvMP5/G8t1e
+  artifact: SeaBreeze\os-support\windows\FilesToInstall\$(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH).zip,SeaBreeze\$(appveyor_repo_tag_name)-$(SEABREEZE_ARCH).zip 
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
