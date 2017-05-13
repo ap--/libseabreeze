@@ -53,7 +53,7 @@ OBPMulticastProtocol::~OBPMulticastProtocol()
 
 }
 
-#if(false) // not yet implemented
+#if 0
 vector<unsigned char> OBPMulticastProtocol::getGroupAddress(const Bus &bus, unsigned char interfaceIndex) throw (ProtocolException)
 {
     TransferHelper *helper;
