@@ -1,0 +1,21 @@
+language:
+- objective-c
+install:
+- mkdir lib
+- cd SeaBreeze
+- make logger=0 wordwidth=fat install_name=/usr/local/lib/libseabreeze.dylib lib/libseabreeze.dylib
+- cp lib/libseabreeze.dylib ../lib/
+- cd ..
+- cp OSX_INSTALL.txt lib/
+- hdiutil create -format UDZO -srcfolder lib $TRAVIS_BRANCH.dmg
+script:
+- echo "done"
+deploy:
+  provider: releases
+  api_key:
+    secure: jMY+c338sbb93kUWCGbrpFLw0/BcUleisRXT5l0j3lJoO/K9Y5hMuXQZmrLn/q4XmteqsMM6jQTFvYi25wBEHYJQpVf3FhRrCZ10Ol+esOSflkCZAcXNPr38IMZMcCpnqkwNQX2O48kls9c3bLUijK3cqf78VN5q41ia0CIf5Jg=
+  file: $TRAVIS_BRANCH.dmg
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true

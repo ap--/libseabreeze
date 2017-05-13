@@ -1,0 +1,3 @@
+# libseabreeze.dylib
+
+To install this precompiled dylib, copy libseabreeze.dylib to "/usr/local/lib".
