@@ -26,8 +26,8 @@ index 0000000..43a8ae8
 +++ b/SeaBreeze/os-support/windows/VisualStudio2008/SeaBreeze.sln
 @@ -0,0 +1,26 @@
 +﻿
-+Microsoft Visual Studio Solution File, Format Version 10.00
-+# Visual Studio 2008
++Microsoft Visual Studio Solution File, Format Version 9.00
++# Visual Studio 2005
 +Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeaBreeze", "VSProj\SeaBreeze.vcproj", "{1282E9E9-C3DB-4F4F-9560-4E5D0539B457}"
 +EndProject
 +Global
