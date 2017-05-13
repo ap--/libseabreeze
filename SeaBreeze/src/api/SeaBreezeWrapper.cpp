@@ -2293,7 +2293,7 @@ unsigned short SeaBreezeWrapper::writeI2CMasterBus(int index, int *errorCode, un
 // multicast feature
 //////////////////////////////////////////////////////////////////////////////
 
-#if(false) // not yet implemented
+#if 0
 void SeaBreezeWrapper::getMulticastGroupAddress(int index, int *errorCode, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
 {
 
