@@ -45,6 +45,9 @@ using namespace seabreeze::oceanBinaryProtocol;
 using namespace std;
 #include <cstdio>
 
+#ifdef WINDOWS
+#define snprintf _snprintf
+#endif
 #ifdef _WINDOWS
 #pragma warning (disable: 4101) // unreferenced local variable
 #endif
