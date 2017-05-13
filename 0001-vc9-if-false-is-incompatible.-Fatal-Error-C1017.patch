@@ -1,0 +1,179 @@
+From 8f1125bf7fa8b9f7f7d711b8dc2eba81b5ae912a Mon Sep 17 00:00:00 2001
+From: ap-- <andreas@poehlmann.io>
+Date: Sat, 13 May 2017 17:45:14 +0200
+Subject: [PATCH 1/4] vc9: '#if(false)' is incompatible. Fatal Error C1017
+
+---
+ SeaBreeze/include/api/seabreezeapi/SeaBreezeAPI.h                       | 2 +-
+ .../include/vendors/OceanOptics/features/multicast/MulticastFeature.h   | 2 +-
+ .../vendors/OceanOptics/features/multicast/MulticastFeatureInterface.h  | 2 +-
+ .../OceanOptics/protocols/interfaces/MulticastProtocolInterface.h       | 2 +-
+ SeaBreeze/src/api/SeaBreezeWrapper.cpp                                  | 2 +-
+ SeaBreeze/src/api/seabreezeapi/DeviceAdapter.cpp                        | 2 +-
+ SeaBreeze/src/api/seabreezeapi/MulticastFeatureAdapter.cpp              | 2 +-
+ SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI.cpp                         | 2 +-
+ SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI_Impl.cpp                    | 2 +-
+ SeaBreeze/src/vendors/OceanOptics/devices/FlameX.cpp                    | 2 +-
+ .../src/vendors/OceanOptics/features/multicast/MulticastFeature.cpp     | 2 +-
+ .../vendors/OceanOptics/protocols/obp/impls/OBPMulticastProtocol.cpp    | 2 +-
+ 12 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/SeaBreeze/include/api/seabreezeapi/SeaBreezeAPI.h b/SeaBreeze/include/api/seabreezeapi/SeaBreezeAPI.h
+index 97cf3b9..a7b1b0a 100644
+--- a/SeaBreeze/include/api/seabreezeapi/SeaBreezeAPI.h
++++ b/SeaBreeze/include/api/seabreezeapi/SeaBreezeAPI.h
+@@ -1888,7 +1888,7 @@ extern "C" {
+ 	*/
+ 	DLL_DECL int sbapi_get_multicast_features(long deviceID, int *error_code, long *features, int max_features);
+ 
+-#if(false) // not implemented yet
++#if 0
+ 	/**
+ 	* This function reads out a group address from the spectrometer's
+ 	* internal memory if that feature is supported.
+diff --git a/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeature.h b/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeature.h
+index 4759859..658d064 100755
+--- a/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeature.h
++++ b/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeature.h
+@@ -56,7 +56,7 @@ namespace seabreeze
+ 			unsigned char interfaceIndex,
+ 			unsigned char enableState)
+ 			throw (FeatureException);
+-#if(false) // not yet implemented
++#if 0
+ 		virtual std::vector<byte> getGroupAddress(
+ 			const Protocol &protocol,
+ 			const Bus &bus, 
+diff --git a/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeatureInterface.h b/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeatureInterface.h
+index 167cf84..3b81059 100755
+--- a/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeatureInterface.h
++++ b/SeaBreeze/include/vendors/OceanOptics/features/multicast/MulticastFeatureInterface.h
+@@ -51,7 +51,7 @@ namespace seabreeze {
+ 			unsigned char interfaceIndex,
+ 			unsigned char enableState)
+ 			throw (FeatureException) = 0;
+-#if(false) // not implemented yet
++#if 0
+ 		virtual std::vector<unsigned char> getGroupAddress(
+ 			const Protocol &protocol,
+ 			const Bus &bus, 
+diff --git a/SeaBreeze/include/vendors/OceanOptics/protocols/interfaces/MulticastProtocolInterface.h b/SeaBreeze/include/vendors/OceanOptics/protocols/interfaces/MulticastProtocolInterface.h
+index 56a890d..82fcecc 100755
+--- a/SeaBreeze/include/vendors/OceanOptics/protocols/interfaces/MulticastProtocolInterface.h
++++ b/SeaBreeze/include/vendors/OceanOptics/protocols/interfaces/MulticastProtocolInterface.h
+@@ -58,7 +58,7 @@ namespace seabreeze {
+         virtual void setEnableState(const Bus &bus, unsigned char interfaceIndex, unsigned char enableState)
+             throw (ProtocolException) = 0;
+ 
+-#if(false)
++#if 0
+ 		/**
+ 		*  Get the  group address.
+ 		*/
+diff --git a/SeaBreeze/src/api/SeaBreezeWrapper.cpp b/SeaBreeze/src/api/SeaBreezeWrapper.cpp
+index 30a3aa6..c39802c 100644
+--- a/SeaBreeze/src/api/SeaBreezeWrapper.cpp
++++ b/SeaBreeze/src/api/SeaBreezeWrapper.cpp
+@@ -2293,7 +2293,7 @@ unsigned short SeaBreezeWrapper::writeI2CMasterBus(int index, int *errorCode, un
+ // multicast feature
+ //////////////////////////////////////////////////////////////////////////////
+ 
+-#if(false) // not yet implemented
++#if 0
+ void SeaBreezeWrapper::getMulticastGroupAddress(int index, int *errorCode, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
+ {
+ 
+diff --git a/SeaBreeze/src/api/seabreezeapi/DeviceAdapter.cpp b/SeaBreeze/src/api/seabreezeapi/DeviceAdapter.cpp
+index cca0395..1c2f80c 100644
+--- a/SeaBreeze/src/api/seabreezeapi/DeviceAdapter.cpp
++++ b/SeaBreeze/src/api/seabreezeapi/DeviceAdapter.cpp
+@@ -1053,7 +1053,7 @@ MulticastFeatureAdapter *DeviceAdapter::getMulticastFeatureByID(long featureID)
+ 	return __getFeatureByID<MulticastFeatureAdapter>(multicastFeatures, featureID);
+ }
+ 
+-#if(false)  // not implemented yet
++#if 0
+ void DeviceAdapter::getMulticastGroupAddress(long featureID, int *errorCode, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
+ {
+ 	MulticastFeatureAdapter *feature = getMulticastFeatureByID(featureID);
+diff --git a/SeaBreeze/src/api/seabreezeapi/MulticastFeatureAdapter.cpp b/SeaBreeze/src/api/seabreezeapi/MulticastFeatureAdapter.cpp
+index 94a00d1..72c664c 100755
+--- a/SeaBreeze/src/api/seabreezeapi/MulticastFeatureAdapter.cpp
++++ b/SeaBreeze/src/api/seabreezeapi/MulticastFeatureAdapter.cpp
+@@ -58,7 +58,7 @@ MulticastFeatureAdapter::~MulticastFeatureAdapter()
+ #pragma warning (disable: 4101) // unreferenced local variable
+ #endif
+ 
+-#if(false) // not yet implemented
++#if 0
+ void MulticastFeatureAdapter::getGroupAddress(int *errorCode, unsigned char interfaceIndex, unsigned char (&groupAddress)[4])
+ {
+ 
+diff --git a/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI.cpp b/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI.cpp
+index 66e5dfa..2c84c8e 100644
+--- a/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI.cpp
++++ b/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI.cpp
+@@ -867,7 +867,7 @@ int sbapi_get_multicast_features(long deviceID, int *error_code, long *features,
+ 	return wrapper->getMulticastFeatures(deviceID, error_code, features, max_features);
+ }
+ 
+-#if(false)  // not yet implemented
++#if 0
+ void sbapi_multicast_get_group_address(long deviceID, long featureID, int *error_code, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
+ {
+ 	SeaBreezeAPI *wrapper = SeaBreezeAPI::getInstance();
+diff --git a/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI_Impl.cpp b/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI_Impl.cpp
+index 7719ca0..e60fd16 100644
+--- a/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI_Impl.cpp
++++ b/SeaBreeze/src/api/seabreezeapi/SeaBreezeAPI_Impl.cpp
+@@ -1178,7 +1178,7 @@ int SeaBreezeAPI_Impl::getMulticastFeatures(long deviceID, int *errorCode, long
+ 	return adapter->getMulticastFeatures(buffer, maxLength);
+ }
+ 
+-#if(false) // not yet implemented
++#if 0
+ void SeaBreezeAPI_Impl::getMulticastGroupAddress(long deviceID, long featureID, int *errorCode, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
+ {
+ 	DeviceAdapter *adapter = getDeviceByID(deviceID);
+diff --git a/SeaBreeze/src/vendors/OceanOptics/devices/FlameX.cpp b/SeaBreeze/src/vendors/OceanOptics/devices/FlameX.cpp
+index 912abff..63238eb 100755
+--- a/SeaBreeze/src/vendors/OceanOptics/devices/FlameX.cpp
++++ b/SeaBreeze/src/vendors/OceanOptics/devices/FlameX.cpp
+@@ -116,7 +116,7 @@ FlameX::FlameX() {
+     this->features.push_back(
+         new RevisionFeature(revisionHelpers));
+ 
+-#if(false) // not yet implemented in the FlameX
++#if 0
+     /* Add optical bench feature */
+     vector<ProtocolHelper *> opticalBenchHelpers;
+     opticalBenchHelpers.push_back(new OBPOpticalBenchProtocol());
+diff --git a/SeaBreeze/src/vendors/OceanOptics/features/multicast/MulticastFeature.cpp b/SeaBreeze/src/vendors/OceanOptics/features/multicast/MulticastFeature.cpp
+index 15570d7..141847d 100755
+--- a/SeaBreeze/src/vendors/OceanOptics/features/multicast/MulticastFeature.cpp
++++ b/SeaBreeze/src/vendors/OceanOptics/features/multicast/MulticastFeature.cpp
+@@ -57,7 +57,7 @@ MulticastFeature::~MulticastFeature()
+ 
+ }
+ 
+-#if(false) // not implemented
++#if 0
+ vector<unsigned char> MulticastFeature::getGroupAddress(const Protocol &protocol, const Bus &bus, unsigned char interfaceIndex) throw (FeatureException) 
+ {
+ 
+diff --git a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPMulticastProtocol.cpp b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPMulticastProtocol.cpp
+index d95b7b7..995ffc7 100755
+--- a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPMulticastProtocol.cpp
++++ b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/impls/OBPMulticastProtocol.cpp
+@@ -53,7 +53,7 @@ OBPMulticastProtocol::~OBPMulticastProtocol()
+ 
+ }
+ 
+-#if(false) // not yet implemented
++#if 0
+ vector<unsigned char> OBPMulticastProtocol::getGroupAddress(const Bus &bus, unsigned char interfaceIndex) throw (ProtocolException)
+ {
+     TransferHelper *helper;
+-- 
+2.11.0 (Apple Git-81)
+

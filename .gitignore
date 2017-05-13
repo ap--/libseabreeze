@@ -1,0 +1,5 @@
+.idea
+*.d
+*.o
+*.bak
+*.DS_Store
