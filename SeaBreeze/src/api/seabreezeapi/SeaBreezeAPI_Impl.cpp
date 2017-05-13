@@ -1178,7 +1178,7 @@ int SeaBreezeAPI_Impl::getMulticastFeatures(long deviceID, int *errorCode, long 
 	return adapter->getMulticastFeatures(buffer, maxLength);
 }
 
-#if(false) // not yet implemented
+#if 0
 void SeaBreezeAPI_Impl::getMulticastGroupAddress(long deviceID, long featureID, int *errorCode, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
 {
 	DeviceAdapter *adapter = getDeviceByID(deviceID);

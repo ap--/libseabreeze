@@ -58,7 +58,7 @@ MulticastFeatureAdapter::~MulticastFeatureAdapter()
 #pragma warning (disable: 4101) // unreferenced local variable
 #endif
 
-#if(false) // not yet implemented
+#if 0
 void MulticastFeatureAdapter::getGroupAddress(int *errorCode, unsigned char interfaceIndex, unsigned char (&groupAddress)[4])
 {
 
