@@ -1,0 +1,26 @@
+From 5416020c1c805fc9980c2d0314e90c69b50d355f Mon Sep 17 00:00:00 2001
+From: ap-- <andreas@poehlmann.io>
+Date: Sat, 13 May 2017 17:49:37 +0200
+Subject: [PATCH 3/4] vc9: Fix snprintf not defined
+
+---
+ .../src/vendors/OceanOptics/protocols/obp/exchanges/OBPTransaction.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPTransaction.cpp b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPTransaction.cpp
+index 0c90f77..c927767 100644
+--- a/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPTransaction.cpp
++++ b/SeaBreeze/src/vendors/OceanOptics/protocols/obp/exchanges/OBPTransaction.cpp
+@@ -45,6 +45,9 @@ using namespace seabreeze::oceanBinaryProtocol;
+ using namespace std;
+ #include <cstdio>
+ 
++#ifdef WINDOWS
++#define snprintf _snprintf
++#endif
+ #ifdef _WINDOWS
+ #pragma warning (disable: 4101) // unreferenced local variable
+ #endif
+-- 
+2.11.0 (Apple Git-81)
+
