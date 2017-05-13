@@ -59,7 +59,7 @@ unsigned int OBPGetConsecutiveSampleCountExchange::queryConsecutiveSampleCount(
     }
 
 	// cast of a byte pointer(data) to an unsigned integer pointer which is dereferenced
-	consecutiveSampleCount = *(unsigned int *)((*result).data()); 
+	consecutiveSampleCount = *(unsigned int *)(&(*result)[0]); 
 
     delete result;
 
