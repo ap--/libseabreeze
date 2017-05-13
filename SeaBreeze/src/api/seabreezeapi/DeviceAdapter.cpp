@@ -1053,7 +1053,7 @@ MulticastFeatureAdapter *DeviceAdapter::getMulticastFeatureByID(long featureID)
 	return __getFeatureByID<MulticastFeatureAdapter>(multicastFeatures, featureID);
 }
 
-#if(false)  // not implemented yet
+#if 0
 void DeviceAdapter::getMulticastGroupAddress(long featureID, int *errorCode, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
 {
 	MulticastFeatureAdapter *feature = getMulticastFeatureByID(featureID);

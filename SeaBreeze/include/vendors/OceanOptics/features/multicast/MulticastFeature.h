@@ -56,7 +56,7 @@ namespace seabreeze
 			unsigned char interfaceIndex,
 			unsigned char enableState)
 			throw (FeatureException);
-#if(false) // not yet implemented
+#if 0
 		virtual std::vector<byte> getGroupAddress(
 			const Protocol &protocol,
 			const Bus &bus, 

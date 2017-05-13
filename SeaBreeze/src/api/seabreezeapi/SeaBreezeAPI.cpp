@@ -867,7 +867,7 @@ int sbapi_get_multicast_features(long deviceID, int *error_code, long *features,
 	return wrapper->getMulticastFeatures(deviceID, error_code, features, max_features);
 }
 
-#if(false)  // not yet implemented
+#if 0
 void sbapi_multicast_get_group_address(long deviceID, long featureID, int *error_code, unsigned char interfaceIndex, unsigned char(&groupAddress)[4])
 {
 	SeaBreezeAPI *wrapper = SeaBreezeAPI::getInstance();

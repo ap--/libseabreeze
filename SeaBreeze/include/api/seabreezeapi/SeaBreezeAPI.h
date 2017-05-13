@@ -1888,7 +1888,7 @@ extern "C" {
 	*/
 	DLL_DECL int sbapi_get_multicast_features(long deviceID, int *error_code, long *features, int max_features);
 
-#if(false) // not implemented yet
+#if 0
 	/**
 	* This function reads out a group address from the spectrometer's
 	* internal memory if that feature is supported.
