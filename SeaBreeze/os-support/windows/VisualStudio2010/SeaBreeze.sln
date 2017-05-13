@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
+Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeaBreeze", "VSProj\SeaBreeze.vcxproj", "{F6857325-8FAB-49A1-987A-E045706DE551}"
 EndProject
