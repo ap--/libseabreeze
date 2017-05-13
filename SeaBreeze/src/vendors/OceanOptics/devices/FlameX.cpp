@@ -116,7 +116,7 @@ FlameX::FlameX() {
     this->features.push_back(
         new RevisionFeature(revisionHelpers));
 
-#if(false) // not yet implemented in the FlameX
+#if 0
     /* Add optical bench feature */
     vector<ProtocolHelper *> opticalBenchHelpers;
     opticalBenchHelpers.push_back(new OBPOpticalBenchProtocol());

@@ -57,7 +57,7 @@ MulticastFeature::~MulticastFeature()
 
 }
 
-#if(false) // not implemented
+#if 0
 vector<unsigned char> MulticastFeature::getGroupAddress(const Protocol &protocol, const Bus &bus, unsigned char interfaceIndex) throw (FeatureException) 
 {
 

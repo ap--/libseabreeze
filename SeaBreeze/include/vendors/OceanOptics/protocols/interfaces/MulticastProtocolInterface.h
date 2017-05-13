@@ -58,7 +58,7 @@ namespace seabreeze {
         virtual void setEnableState(const Bus &bus, unsigned char interfaceIndex, unsigned char enableState)
             throw (ProtocolException) = 0;
 
-#if(false)
+#if 0
 		/**
 		*  Get the  group address.
 		*/
