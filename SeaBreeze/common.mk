@@ -76,14 +76,14 @@ else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
 
     EXTRA_FLAGS = 
     ifeq ($(SB_DEBUG), 1)
-	EXTRA_FLAGS += "/p:Configuration=Debug"
+	EXTRA_FLAGS += /p:Configuration=Debug
     else
-	EXTRA_FLAGS += "/p:Configuration=Release"
+	EXTRA_FLAGS += /p:Configuration=Release
     endif
     ifeq ($(SB_ARCH), 32)
-	EXTRA_FLAGS += "/p:Platform=Win32"
+	EXTRA_FLAGS += /p:Platform=Win32
     else
-	EXTRA_FLAGS += "/p:Platform=x64"
+	EXTRA_FLAGS += /p:Platform=x64
     endif
 
 # Linux configuration
@@ -100,10 +100,13 @@ else
     
     EXTRA_FLAGS = 
     ifeq ($(SB_DEBUG), 1)
-	EXTRA_FLAGS += "-g -DOOI_DEBUG"
+	EXTRA_FLAGS += -g -DOOI_DEBUG
     endif
     ifeq ($(SB_ARCH), 32)
-	EXTRA_FLAGS += "-m32"
+	EXTRA_FLAGS += -m32
+	LFLAGS_LIB = -L/usr/lib32 \
+		     -shared \
+		     -lusb
     endif
 
 endif
