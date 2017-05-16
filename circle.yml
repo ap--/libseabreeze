@@ -6,7 +6,7 @@ dependencies:
 
 compile:
   override:
-    - make logger=0 lib/libseabreeze.so:
+    - SB_ARCH=64 make lib/libseabreeze.so:
         pwd:
           SeaBreeze
     - tar czf ${CIRCLE_TAG}-64.tar.gz lib/libseabreeze.so:
@@ -15,7 +15,7 @@ compile:
     - make clean:
         pwd:
           SeaBreeze
-    - make wordwidth=32 logger=0 lib/libseabreeze.so:
+    - SB_ARCH=32 make lib/libseabreeze.so:
         pwd:
           SeaBreeze
     - tar czf ${CIRCLE_TAG}-32.tar.gz lib/libseabreeze.so:

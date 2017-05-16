@@ -1,15 +1,50 @@
+branches:
+  # blacklist
+  except:
+    - deploy
 environment:
 
   matrix:
-    - SEABREEZE_ARCH: "Win32"
-    - SEABREEZE_ARCH: "x64"
+    - SB_ARCH: "32"
+      SB_DEBUG: 0
+      VISUALSTUDIO_PROJ: "VisualStudio2008"
+      SB_VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\vcvarsall.bat"
+      VS_ARCH: "x86"
+      VS_VCV: "vc9"
+      SB_DRIVERS: "no"
+
+    - SB_ARCH: "64"
+      SB_DEBUG: 0
+      VISUALSTUDIO_PROJ: "VisualStudio2008"
+      SB_VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC\\vcvarsall.bat"
+      VS_ARCH: "amd64"
+      VS_VCV: "vc9"
+      SB_DRIVERS: "no"
+
+    - SB_ARCH: "32"
+      SB_DEBUG: 0
+      VISUALSTUDIO_PROJ: "VisualStudio2015"
+      SB_VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat"
+      VS_ARCH: "x86"
+      VS_VCV: "vc14"
+      SB_DRIVERS: "no"
+
+    - SB_ARCH: "64"
+      SB_DEBUG: 0
+      VISUALSTUDIO_PROJ: "VisualStudio2015"
+      SB_VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat"
+      VS_ARCH: "amd64"
+      VS_VCV: "vc14"
+      SB_DRIVERS: "deploy"
 
 init:
   - "ECHO START"
 
 install:
-  - cmd: cd "SeaBreeze"
-  - cmd: msbuild.exe /t:SeaBreeze /p:Configuration=Release /p:Platform=%SEABREEZE_ARCH% "os-support\\windows\\VisualStudio2015\\SeaBreeze.sln" 
+  - cmd: call %SB_VCVARS% %VS_ARCH%
+  - cmd: C:\cygwin\bin\bash.exe -lc "cd ${APPVEYOR_BUILD_FOLDER}/SeaBreeze && make lib/Seabreeze.dll"
+  - cmd: 7z a %APPVEYOR_REPO_TAG_NAME%-%SB_ARCH%-%VS_VCV%.zip %APPVEYOR_BUILD_FOLDER%\SeaBreeze\lib\*.*
+  - cmd: IF "%SB_DRIVERS%" == "deploy" (7z a %APPVEYOR_REPO_TAG_NAME%-driver-files.zip %APPVEYOR_BUILD_FOLDER%\SeaBreeze\os-support\windows\FilesToInstall\windows-support\*)
 
 build: off
 
@@ -20,20 +55,18 @@ after_test:
   - "ECHO done"
 
 artifacts:
-  - path: SeaBreeze\lib
-    name: $(appveyor_repo_tag_name)-$(SEABREEZE_ARCH)
-    type: zip
+  - path: $(appveyor_repo_tag_name)-$(SB_ARCH)-$(VS_VCV).zip
+    name: libseabreeze
 
-  - path: SeaBreeze\os-support\windows\FilesToInstall\windows-support
-    name: $(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH)
-    type: zip
+  - path: $(appveyor_repo_tag_name)-driver-files.zip
+    name: libseabreeze-drivers
 
 deploy:
   release: $(appveyor_repo_tag_name)
   provider: GitHub
   auth_token:
     secure: cUL3LbCCVYDc8dpqZgCsbbSdFyDRr6qDQRCAOBUmQJtifkXutnNvinvMP5/G8t1e
-  artifact: SeaBreeze\os-support\windows\FilesToInstall\$(appveyor_repo_tag_name)-drivers-$(SEABREEZE_ARCH).zip,SeaBreeze\$(appveyor_repo_tag_name)-$(SEABREEZE_ARCH).zip 
+  artifact: libseabreeze, libseabreeze-drivers
   draft: false
   prerelease: false
   on:

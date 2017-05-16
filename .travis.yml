@@ -3,7 +3,7 @@ language:
 install:
 - mkdir lib
 - cd SeaBreeze
-- make logger=0 wordwidth=fat install_name=/usr/local/lib/libseabreeze.dylib lib/libseabreeze.dylib
+- SB_ARCH=fat make install_name=/usr/local/lib/libseabreeze.dylib lib/libseabreeze.dylib
 - cp lib/libseabreeze.dylib ../lib/
 - cd ..
 - cp OSX_INSTALL.txt lib/
