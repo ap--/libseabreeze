@@ -8,7 +8,11 @@ LIB_DIR=../../../lib
 
 MSBUILD_BIN = MSBuild.exe
 MSBUILD_OPTS = /p:Configuration=Debug /p:Platform=Win32
-MSBUILD_OUTPUT_DIR = Debug
+ifeq ($(SB_ARCH), 32)
+MSBUILD_OUTPUT_DIR = Release
+else
+MSBUILD_OUTPUT_DIR = x64/Release
+endif
 
 all:
 	@if which MSBuild.exe 1>/dev/null 2>&1 ; then \
