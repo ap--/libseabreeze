@@ -41,7 +41,7 @@ init:
   - "ECHO START"
 
 install:
-  - cmd: call %SB_VCVARS% %VS_ARCH%
+  - cmd: call "%SB_VCVARS%" %VS_ARCH%
   - cmd: C:\cygwin\bin\bash.exe -lc "cd ${APPVEYOR_BUILD_FOLDER}/SeaBreeze && make lib/Seabreeze.dll"
   - cmd: 7z a %APPVEYOR_REPO_TAG_NAME%-%SB_ARCH%-%VS_VCV%.zip %APPVEYOR_BUILD_FOLDER%\SeaBreeze\lib\*.*
   - cmd: IF "%SB_DRIVERS%" == "deploy" (7z a %APPVEYOR_REPO_TAG_NAME%-driver-files.zip %APPVEYOR_BUILD_FOLDER%\SeaBreeze\os-support\windows\FilesToInstall\windows-support\*)
