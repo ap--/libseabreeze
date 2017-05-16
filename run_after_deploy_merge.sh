@@ -16,7 +16,13 @@ SeaBreeze/os-support/windows/scripts/update-visual-studio-projects
 
 # make new commit
 echo "commiting updated resources"
+git add SeaBreeze/os-support/windows/VisualStudio2005/VSProj/SeaBreeze.vcproj
 git add SeaBreeze/os-support/windows/VisualStudio2008/VSProj/SeaBreeze.vcproj
+git add SeaBreeze/os-support/windows/VisualStudio2010/VSProj/SeaBreeze.vcxproj
+git add SeaBreeze/os-support/windows/VisualStudio2010/VSProj/SeaBreeze.vcxproj.filters
+git add SeaBreeze/os-support/windows/VisualStudio2012/VSProj/SeaBreeze.vcxproj
+git add SeaBreeze/os-support/windows/VisualStudio2013/VSProj/SeaBreeze.vcxproj
+git add SeaBreeze/os-support/windows/VisualStudio2013/VSProj/SeaBreeze.vcxproj.filters
 git add SeaBreeze/os-support/windows/VisualStudio2015/VSProj/SeaBreeze.vcxproj
 git add SeaBreeze/os-support/windows/VisualStudio2015/VSProj/SeaBreeze.vcxproj.filters
 git commit -m "Hotfix visualstudio project files"
