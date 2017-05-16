@@ -105,6 +105,7 @@ else
     ifeq ($(SB_ARCH), 32)
 	EXTRA_FLAGS += -m32
 	LFLAGS_LIB = -L/usr/lib32 \
+		     -m32 \
 		     -shared \
 		     -lusb
     endif
