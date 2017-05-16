@@ -86,6 +86,7 @@ else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
 	EXTRA_FLAGS += /property:Platform=x64
     endif
 
+    export MSBUILD_OPTS = $(EXTRA_FLAGS)
 # Linux configuration
 else
     SUFFIX      = so
