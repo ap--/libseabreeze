@@ -76,14 +76,14 @@ else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
 
     EXTRA_FLAGS = 
     ifeq ($(SB_DEBUG), 1)
-	EXTRA_FLAGS += /p:Configuration=Debug
+	EXTRA_FLAGS += /property:Configuration=Debug
     else
-	EXTRA_FLAGS += /p:Configuration=Release
+	EXTRA_FLAGS += /property:Configuration=Release
     endif
     ifeq ($(SB_ARCH), 32)
-	EXTRA_FLAGS += /p:Platform=Win32
+	EXTRA_FLAGS += /property:Platform=Win32
     else
-	EXTRA_FLAGS += /p:Platform=x64
+	EXTRA_FLAGS += /property:Platform=x64
     endif
 
 # Linux configuration
