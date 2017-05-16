@@ -1,0 +1,73 @@
+From 814cfd1692964320b2157012afee2d0d3f014365 Mon Sep 17 00:00:00 2001
+From: ap-- <andreas@poehlmann.io>
+Date: Tue, 16 May 2017 23:48:01 +0200
+Subject: [PATCH 4/4] update update script
+
+---
+ .../windows/scripts/update-visual-studio-projects  | 43 ++++------------------
+ 1 file changed, 8 insertions(+), 35 deletions(-)
+
+diff --git a/SeaBreeze/os-support/windows/scripts/update-visual-studio-projects b/SeaBreeze/os-support/windows/scripts/update-visual-studio-projects
+index cc95e42..591d4c4 100755
+--- a/SeaBreeze/os-support/windows/scripts/update-visual-studio-projects
++++ b/SeaBreeze/os-support/windows/scripts/update-visual-studio-projects
+@@ -46,6 +46,14 @@ sub main
+     );
+ 
+     updateProj(
++        PATHNAME         => "$SeaBreezeDir/os-support/windows/VisualStudio2008/VSProj/SeaBreeze.vcproj",
++        INCLUDES         => $includes, 
++        SOURCES          => $sources, 
++        INCLUDE_TEMPLATE => "\t\t\t<File RelativePath=\"..\\..\\..\\..\\FILE_GOES_HERE\"></File>",
++        SOURCE_TEMPLATE  => "\t\t\t<File RelativePath=\"..\\..\\..\\..\\FILE_GOES_HERE\"></File>",
++    );
++
++    updateProj(
+         PATHNAME         => "$SeaBreezeDir/os-support/windows/VisualStudio2010/VSProj/SeaBreeze.vcxproj",
+         INCLUDES         => $includes, 
+         SOURCES          => $sources, 
+@@ -101,41 +109,6 @@ sub main
+         SOURCE_TEMPLATE  => "    <ClCompile Include=\"..\\..\\..\\..\\FILE_GOES_HERE\"><Filter>Sources</Filter></ClCompile>",
+     );
+ 
+-    fixSetupPaths(
+-        PATHNAME => "$SeaBreezeDir/os-support/windows/VisualStudio2010/SetUp32/SetUp32.vdproj",
+-        OLD      => "\\\\\\\\vmware-host\\\\Shared Folders\\\\work\\\\gforge\\\\seabreeze\\\\SeaBreeze",
+-        NEW      => "..\\\\..\\\\..\\\\.."
+-    );
+-
+-    fixSetupPaths(
+-        PATHNAME => "$SeaBreezeDir/os-support/windows/VisualStudio2010/SetUp64/SetUp64.vdproj",
+-        OLD      => "\\\\\\\\vmware-host\\\\Shared Folders\\\\work\\\\gforge\\\\seabreeze\\\\SeaBreeze",
+-        NEW      => "..\\\\..\\\\..\\\\.."
+-    );
+-	
+-    fixSetupPaths(
+-        PATHNAME => "$SeaBreezeDir/os-support/windows/VisualStudio2013/SetUp32/SetUp32.vdproj",
+-        OLD      => "\\\\\\\\vmware-host\\\\Shared Folders\\\\work\\\\gforge\\\\seabreeze\\\\SeaBreeze",
+-        NEW      => "..\\\\..\\\\..\\\\.."
+-    );
+-
+-    fixSetupPaths(
+-        PATHNAME => "$SeaBreezeDir/os-support/windows/VisualStudio2013/SetUp64/SetUp64.vdproj",
+-        OLD      => "\\\\\\\\vmware-host\\\\Shared Folders\\\\work\\\\gforge\\\\seabreeze\\\\SeaBreeze",
+-        NEW      => "..\\\\..\\\\..\\\\.."
+-    );
+-
+-    fixSetupPaths(
+-        PATHNAME => "$SeaBreezeDir/os-support/windows/VisualStudio2015/SetUp32/SetUp32.vdproj",
+-        OLD      => "\\\\\\\\vmware-host\\\\Shared Folders\\\\work\\\\gforge\\\\seabreeze\\\\SeaBreeze",
+-        NEW      => "..\\\\..\\\\..\\\\.."
+-    );
+-
+-    fixSetupPaths(
+-        PATHNAME => "$SeaBreezeDir/os-support/windows/VisualStudio2015/SetUp64/SetUp64.vdproj",
+-        OLD      => "\\\\\\\\vmware-host\\\\Shared Folders\\\\work\\\\gforge\\\\seabreeze\\\\SeaBreeze",
+-        NEW      => "..\\\\..\\\\..\\\\.."
+-    );
+ }
+ 
+ sub readFiles
+-- 
+2.11.0 (Apple Git-81)
+
