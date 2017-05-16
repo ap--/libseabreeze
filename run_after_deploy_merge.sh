@@ -9,6 +9,8 @@ git am --ignore-whitespace --signoff 0001-vc9-if-false-is-incompatible.-Fatal-Er
 git am --ignore-whitespace --signoff 0002-vc9-vector.data-not-supported.patch
 git am --ignore-whitespace --signoff 0003-vc9-Fix-snprintf-not-defined.patch
 git am --ignore-whitespace --signoff 0004-Providing-VisualStudio2008-sln-for-python2.7-builds.patch
+git am --ignore-whitespace --signoff 0005-update-update-script.patch
+git am --ignore-whitespace --signoff 0006-patch-common.mk.patch
 
 # Add all files to project
 echo "Updating project resources"
