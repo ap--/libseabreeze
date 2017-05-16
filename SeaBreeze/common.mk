@@ -9,13 +9,14 @@ CFLAGS_BASE = -I${SEABREEZE}/include \
               -Wunused \
               -Wmissing-include-dirs \
               -Werror \
-              -g \
               -O0 \
               -fpic \
               -fno-stack-protector \
               -shared	
 
- 
+# Select debug builds and architecture
+SB_DEBUG ?= 0
+SB_ARCH ?= 64
 
 export UNAME = $(shell uname)
 
@@ -37,10 +38,25 @@ ifeq ($(UNAME), Darwin)
                   -Wunused \
                   -Wmissing-include-dirs \
                   -Werror \
-                  -g \
                   -O0 \
                   -fpic \
                   -fno-stack-protector 
+
+    EXTRA_FLAGS = 
+    ifeq ($(SB_DEBUG), 1)
+	EXTRA_FLAGS += -g -DOOI_DEBUG
+    endif
+    ifneq (,$(filter $(SB_ARCH),32 fat))  # if 32 or fat
+	EXTRA_FLAGS += -arch i386
+    else ifneq (,$(filter $(SB_ARCH),64 fat))  # if 64 or fat
+	EXTRA_FLAGS += -arch x86_64
+    endif
+
+    # osx install name
+    ifdef install_name
+	LFLAGS_LIB += -install_name $(install_name)
+    endif
+
 
 # Cygwin-32 configuration 
 else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
@@ -53,20 +69,19 @@ else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
                   -Wall \
                   -Wunused \
                   -Werror \
-                  -ggdb3 \
                   -shared
 
-# MinGW-32 configuration
-else ifeq ($(findstring MINGW, $(UNAME)), MINGW)
-    SUFFIX      = dll
-    LIBBASENAME = libseabreeze
-    LFLAGS_APP += -L/local/lib \
-                  -lusb0 \
-                  -lstdc++ \
-                  -lm
-    LFLAGS_LIB += -L/local/lib \
-                  -lusb0 \
-                  -shared
+    EXTRA_FLAGS = 
+    ifeq ($(SB_DEBUG), 1)
+	EXTRA_FLAGS += "/p:Configuration=Debug"
+    else
+	EXTRA_FLAGS += "/p:Configuration=Release"
+    endif
+    ifeq ($(SB_ARCH), 32)
+	EXTRA_FLAGS += "/p:Platform=Win32"
+    else
+	EXTRA_FLAGS += "/p:Platform=x64"
+    endif
 
 # Linux configuration
 else
@@ -79,40 +94,21 @@ else
     LFLAGS_LIB += -L/usr/lib \
                   -shared \
                   -lusb
+    
+    EXTRA_FLAGS = 
+    ifeq ($(SB_DEBUG), 1)
+	EXTRA_FLAGS += "-g -DOOI_DEBUG"
+    endif
+    ifeq ($(SB_ARCH), 32)
+	EXTRA_FLAGS += "-m32"
+    endif
+
 endif
 
-# enable Logger
-ifndef logger
-    logger = 1
-endif
-ifeq ($(logger),1)
-    CFLAGS_BASE += -DOOI_DEBUG
-endif
-
-# osx install name
-ifdef install_name
-    LFLAGS_LIB += -install_name $(install_name)
-endif
 
 # these are for the .o files making up libseabreeze
-CPPFLAGS     = $(CFLAGS_BASE)
-CFLAGS       = $(CFLAGS_BASE) -std=gnu99
-
-# allow for a 32 bit build
-ifdef wordwidth
-ifeq ($(wordwidth),32)
-	CPPFLAGS += -arch i386
-	CFLAGS += -arch i386
-	LFLAGS_APP += -arch i386
-	LFLAGS_LIB += -arch i386
-endif
-ifeq ($(wordwidth),fat)
-	CPPFLAGS += -arch i386 -arch x86_64
-	CFLAGS += -arch i386 -arch x86_64
-	LFLAGS_APP += -arch i386 -arch x86_64
-	LFLAGS_LIB += -arch i386 -arch x86_64
-endif
-endif
+CPPFLAGS     = $(CFLAGS_BASE) $(EXTRA_FLAGS)
+CFLAGS       = $(CFLAGS_BASE) -std=gnu99 $(EXTRA_FLAGS)
 
 export LIBNAME=$(LIBBASENAME).$(SUFFIX)
 
@@ -127,6 +123,7 @@ DEPS_C   := $(patsubst %.c,%.d,$(SRCS_C))
 OBJS_C   := $(patsubst %.c,%.o,$(SRCS_C))
 
 VISUALSTUDIO_PROJECTS = VisualStudio2005 \
+			VisualStudio2008 \
                         VisualStudio2010 \
                         VisualStudio2012 \
                         VisualStudio2013 \
