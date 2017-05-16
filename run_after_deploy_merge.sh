@@ -11,6 +11,7 @@ git am --ignore-whitespace --signoff 0003-vc9-Fix-snprintf-not-defined.patch
 git am --ignore-whitespace --signoff 0004-Providing-VisualStudio2008-sln-for-python2.7-builds.patch
 git am --ignore-whitespace --signoff 0005-update-update-script.patch
 git am --ignore-whitespace --signoff 0006-patch-common.mk.patch
+git am --ignore-whitespace --signoff 0007-fix-builds.patch
 
 # Add all files to project
 echo "Updating project resources"
