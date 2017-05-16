@@ -48,8 +48,11 @@ ifeq ($(UNAME), Darwin)
     endif
     ifneq (,$(filter $(SB_ARCH),32 fat))  # if 32 or fat
 	EXTRA_FLAGS += -arch i386
-    else ifneq (,$(filter $(SB_ARCH),64 fat))  # if 64 or fat
+	LFLAGS_LIB += -arch i386
+    endif
+    ifneq (,$(filter $(SB_ARCH),64 fat))  # if 64 or fat
 	EXTRA_FLAGS += -arch x86_64
+	LFLAGS_LIB += -arch x86_64
     endif
 
     # osx install name
