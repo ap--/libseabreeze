@@ -7,7 +7,7 @@ SEABREEZE_LIB=SeaBreeze.lib
 LIB_DIR=../../../lib
 
 MSBUILD_BIN = MSBuild.exe
-MSBUILD_OPTS = /p:Configuration=Debug /p:Platform=Win32
+MSBUILD_OPTS = $(EXTRA_FLAGS)
 ifeq ($(SB_ARCH), 32)
 MSBUILD_OUTPUT_DIR = Release
 else
