@@ -1,0 +1,31 @@
+# Test build
+dependencies:
+  pre:
+    - sudo apt-get update
+    - sudo apt-get install libusb-dev
+
+compile:
+  override:
+    - SB_ARCH=64 make lib/libseabreeze.so:
+        pwd:
+          SeaBreeze
+    - tar czf ${CIRCLE_TAG}-64.tar.gz lib/libseabreeze.so:
+        pwd:
+          SeaBreeze
+
+test:
+  override:
+    - "true"
+
+# Define artifacts
+general:
+  artifacts:
+    - "SeaBreeze/${CIRCLE_TAG}-64.tar.gz"
+
+deployment:
+  release:
+    tag: /libseabreeze-.*/
+    owner: ap--
+    commands:
+        - go get github.com/aktau/github-release
+        - github-release upload --user "ap--" --repo libseabreeze --tag ${CIRCLE_TAG} --name "${CIRCLE_TAG}-64.tar.gz" --file "SeaBreeze/${CIRCLE_TAG}-64.tar.gz"

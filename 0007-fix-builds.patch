@@ -1,0 +1,67 @@
+From d2faa56e0632df78c70b52d2e6f2b03f9d63cfd4 Mon Sep 17 00:00:00 2001
+From: ap-- <andreas@poehlmann.io>
+Date: Wed, 17 May 2017 00:32:59 +0200
+Subject: [PATCH] fix builds
+
+---
+ SeaBreeze/Makefile  | 4 +++-
+ SeaBreeze/common.mk | 5 ++++-
+ SeaBreeze/win.mk    | 6 +++++-
+ 3 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/SeaBreeze/Makefile b/SeaBreeze/Makefile
+index 8283bae..9932685 100644
+--- a/SeaBreeze/Makefile
++++ b/SeaBreeze/Makefile
+@@ -26,11 +26,13 @@ seabreeze: lib/$(LIBNAME)
+ 	make -C sample-code
+ 
+ lib/libseabreeze.$(SUFFIX): initialize
+-	$(info flags = $(LFLAGS_LIB))
++	$(info lflags = $(LFLAGS_LIB))
++	$(info cflags = $(CFLAGS))
+ 	$(MAKE) -C src
+ 	$(CPP) $(LFLAGS_LIB) -o $@ lib/*.o  
+ 
+ lib/SeaBreeze.dll: initialize
++	$(info extraflags = $(EXTRA_FLAGS))
+ 	$(MAKE) -C os-support/windows/$(VISUALSTUDIO_PROJ)
+ 
+ initialize: 
+diff --git a/SeaBreeze/common.mk b/SeaBreeze/common.mk
+index 1e2efcd..3e9284b 100644
+--- a/SeaBreeze/common.mk
++++ b/SeaBreeze/common.mk
+@@ -48,8 +48,11 @@ ifeq ($(UNAME), Darwin)
+     endif
+     ifneq (,$(filter $(SB_ARCH),32 fat))  # if 32 or fat
+ 	EXTRA_FLAGS += -arch i386
+-    else ifneq (,$(filter $(SB_ARCH),64 fat))  # if 64 or fat
++	LFLAGS_LIB += -arch i386
++    endif
++    ifneq (,$(filter $(SB_ARCH),64 fat))  # if 64 or fat
+ 	EXTRA_FLAGS += -arch x86_64
++	LFLAGS_LIB += -arch x86_64
+     endif
+ 
+     # osx install name
+diff --git a/SeaBreeze/win.mk b/SeaBreeze/win.mk
+index b337d4c..c030b03 100644
+--- a/SeaBreeze/win.mk
++++ b/SeaBreeze/win.mk
+@@ -8,7 +8,11 @@ LIB_DIR=../../../lib
+ 
+ MSBUILD_BIN = MSBuild.exe
+ MSBUILD_OPTS = /p:Configuration=Debug /p:Platform=Win32
+-MSBUILD_OUTPUT_DIR = Debug
++ifeq ($(SB_ARCH), 32)
++MSBUILD_OUTPUT_DIR = Release
++else
++MSBUILD_OUTPUT_DIR = x64/Release
++endif
+ 
+ all:
+ 	@if which MSBuild.exe 1>/dev/null 2>&1 ; then \
+-- 
+2.11.0 (Apple Git-81)
+
