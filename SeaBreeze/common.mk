@@ -108,6 +108,7 @@ else
 	LFLAGS_LIB = -L/usr/lib32 \
 		     -L/lib32 \
 		     -L/lib/i386-linux-gnu \
+		     -L/usr/lib \
 		     -m32 \
 		     -shared \
 		     -lusb
