@@ -7,7 +7,7 @@ SEABREEZE_LIB=SeaBreeze.lib
 LIB_DIR=../../../lib
 
 MSBUILD_BIN = MSBuild.exe
-MSBUILD_OPTS = $(EXTRA_FLAGS)
+MSBUILD_OPTS ?= /property:Configuration=Release /property:Platform=Win32
 ifeq ($(SB_ARCH), 32)
 MSBUILD_OUTPUT_DIR = Release
 else
@@ -15,11 +15,8 @@ MSBUILD_OUTPUT_DIR = x64/Release
 endif
 
 all:
-	@if which MSBuild.exe 1>/dev/null 2>&1 ; then \
-        ( $(MSBUILD_BIN) $(MSBUILD_OPTS) $(SEABREEZE_SLN) && \
-          cp -v $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_DLL) $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_LIB) $(LIB_DIR) \
-        ) ; \
-     fi
+	$(MSBUILD_BIN) $(MSBUILD_OPTS) $(SEABREEZE_SLN)
+	cp -v $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_DLL) $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_LIB) $(LIB_DIR)
 
 clean:
 	@if which MSBuild.exe 1>/dev/null 2>&1 ; then \
