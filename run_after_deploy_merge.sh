@@ -12,6 +12,7 @@ git am --ignore-whitespace --signoff 0004-Providing-VisualStudio2008-sln-for-pyt
 git am --ignore-whitespace --signoff 0005-update-update-script.patch
 git am --ignore-whitespace --signoff 0006-patch-common.mk.patch
 git am --ignore-whitespace --signoff 0007-fix-builds.patch
+git am --ignore-whitespace --signoff 0008-Fix-windows-builds-and-try-to-fix-linux32.patch
 
 # Add all files to project
 echo "Updating project resources"

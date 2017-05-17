@@ -1,0 +1,86 @@
+From 5890acf53a2da483bc5d6437c95306e91bfa6c78 Mon Sep 17 00:00:00 2001
+From: ap-- <andreas@poehlmann.io>
+Date: Wed, 17 May 2017 02:41:43 +0200
+Subject: [PATCH] Fix windows builds and try to fix linux32
+
+---
+ SeaBreeze/common.mk | 20 ++++++++++++++------
+ SeaBreeze/win.mk    |  9 +++------
+ 2 files changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/SeaBreeze/common.mk b/SeaBreeze/common.mk
+index 3e9284b..dc7602e 100644
+--- a/SeaBreeze/common.mk
++++ b/SeaBreeze/common.mk
+@@ -76,16 +76,17 @@ else ifeq ($(findstring CYGWIN, $(UNAME)), CYGWIN)
+ 
+     EXTRA_FLAGS = 
+     ifeq ($(SB_DEBUG), 1)
+-	EXTRA_FLAGS += "/p:Configuration=Debug"
++	EXTRA_FLAGS += /property:Configuration=Debug
+     else
+-	EXTRA_FLAGS += "/p:Configuration=Release"
++	EXTRA_FLAGS += /property:Configuration=Release
+     endif
+     ifeq ($(SB_ARCH), 32)
+-	EXTRA_FLAGS += "/p:Platform=Win32"
++	EXTRA_FLAGS += /property:Platform=Win32
+     else
+-	EXTRA_FLAGS += "/p:Platform=x64"
++	EXTRA_FLAGS += /property:Platform=x64
+     endif
+ 
++    export MSBUILD_OPTS = $(EXTRA_FLAGS)
+ # Linux configuration
+ else
+     SUFFIX      = so
+@@ -100,10 +101,17 @@ else
+     
+     EXTRA_FLAGS = 
+     ifeq ($(SB_DEBUG), 1)
+-	EXTRA_FLAGS += "-g -DOOI_DEBUG"
++	EXTRA_FLAGS += -g -DOOI_DEBUG
+     endif
+     ifeq ($(SB_ARCH), 32)
+-	EXTRA_FLAGS += "-m32"
++	EXTRA_FLAGS += -m32
++	LFLAGS_LIB = -L/usr/lib32 \
++		     -L/lib32 \
++		     -L/lib/i386-linux-gnu \
++		     -L/usr/lib \
++		     -m32 \
++		     -shared \
++		     -lusb
+     endif
+ 
+ endif
+diff --git a/SeaBreeze/win.mk b/SeaBreeze/win.mk
+index c030b03..d9ddc28 100644
+--- a/SeaBreeze/win.mk
++++ b/SeaBreeze/win.mk
+@@ -7,7 +7,7 @@ SEABREEZE_LIB=SeaBreeze.lib
+ LIB_DIR=../../../lib
+ 
+ MSBUILD_BIN = MSBuild.exe
+-MSBUILD_OPTS = /p:Configuration=Debug /p:Platform=Win32
++MSBUILD_OPTS ?= /property:Configuration=Release /property:Platform=Win32
+ ifeq ($(SB_ARCH), 32)
+ MSBUILD_OUTPUT_DIR = Release
+ else
+@@ -15,11 +15,8 @@ MSBUILD_OUTPUT_DIR = x64/Release
+ endif
+ 
+ all:
+-	@if which MSBuild.exe 1>/dev/null 2>&1 ; then \
+-        ( $(MSBUILD_BIN) $(MSBUILD_OPTS) $(SEABREEZE_SLN) && \
+-          cp -v $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_DLL) $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_LIB) $(LIB_DIR) \
+-        ) ; \
+-     fi
++	$(MSBUILD_BIN) $(MSBUILD_OPTS) /t:SeaBreeze $(SEABREEZE_SLN)
++	cp -v $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_DLL) $(MSBUILD_OUTPUT_DIR)/$(SEABREEZE_LIB) $(LIB_DIR)
+ 
+ clean:
+ 	@if which MSBuild.exe 1>/dev/null 2>&1 ; then \
+-- 
+2.11.0 (Apple Git-81)
+
